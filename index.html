@@ -1,0 +1,983 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Corporate Estate Avenue - Premium Property Management & Real Estate Consulting Services in Bangalore. Trusted partner for buying, selling, renting, and relocating.">
+    <title>Corporate Estate Avenue | Premium Real Estate Consulting Bangalore</title>
+    <!-- Google Fonts: Outfit for brand/headings, Inter for UI/Body -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Outfit:wght@300;400;500;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <!-- Fixed Glassmorphic Navigation Bar -->
+    <header class="navbar-container">
+        <nav class="navbar" aria-label="Main Navigation">
+            <div class="logo">
+                <span class="logo-symbol">CEA</span>
+                <span class="logo-text">Corporate Estate Avenue</span>
+            </div>
+            
+            <!-- Hamburger Menu Toggle (Mobile) -->
+            <button class="nav-toggle" aria-label="Toggle Menu" id="js-nav-toggle">
+                <span class="hamburger-bar"></span>
+                <span class="hamburger-bar"></span>
+                <span class="hamburger-bar"></span>
+            </button>
+
+            <!-- Navigation Links -->
+            <ul class="nav-menu" id="js-nav-menu">
+                <li><a href="#home" class="nav-link active" id="link-home">Home</a></li>
+                <li><a href="#about" class="nav-link" id="link-about">About</a></li>
+                <li><a href="#why-choose" class="nav-link" id="link-why">Why Choose Us</a></li>
+                <li class="nav-item-dropdown" id="js-nav-dropdown">
+                    <a href="#services" class="nav-link dropdown-toggle" id="link-services" aria-haspopup="true" aria-expanded="false">
+                        Services <span class="dropdown-caret">▾</span>
+                    </a>
+                    <div class="mega-menu glass-panel" aria-label="Services Submenu">
+                        <div class="mega-menu-grid">
+                            <!-- Col 1: Property Services -->
+                            <div class="mega-menu-col">
+                                <h4 class="mega-menu-title">Property Services</h4>
+                                <ul class="mega-menu-list">
+                                    <li>
+                                        <a href="#services" class="mega-menu-item" data-service="buy">
+                                            <span class="mega-menu-icon">
+                                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+                                            </span>
+                                            <span>Buy Property</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#upload-modal" class="mega-menu-item trigger-upload" data-service="sell">
+                                            <span class="mega-menu-icon">
+                                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="9" y1="3" x2="9" y2="21"></line><line x1="15" y1="3" x2="15" y2="21"></line><line x1="3" y1="9" x2="21" y2="9"></line><line x1="3" y1="15" x2="21" y2="15"></line></svg>
+                                            </span>
+                                            <span>Sell Property</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#services" class="mega-menu-item" data-service="rent">
+                                            <span class="mega-menu-icon">
+                                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+                                            </span>
+                                            <span>Rent Property</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#services" class="mega-menu-item" data-service="pm">
+                                            <span class="mega-menu-icon">
+                                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                                            </span>
+                                            <span>Property Management</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#services" class="mega-menu-item" data-service="comm">
+                                            <span class="mega-menu-icon">
+                                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
+                                            </span>
+                                            <span>Commercial Property</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#services" class="mega-menu-item" data-service="res">
+                                            <span class="mega-menu-icon">
+                                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                                            </span>
+                                            <span>Residential Property</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                            
+                            <!-- Col 2: Client Services -->
+                            <div class="mega-menu-col">
+                                <h4 class="mega-menu-title">Client Services</h4>
+                                <ul class="mega-menu-list">
+                                    <li>
+                                        <a href="#services" class="mega-menu-item" data-service="first-buyers">
+                                            <span class="mega-menu-icon">
+                                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+                                            </span>
+                                            <span>First-Time Buyers</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#services" class="mega-menu-item" data-service="first-sellers">
+                                            <span class="mega-menu-icon">
+                                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="8" y1="12" x2="16" y2="12"></line><line x1="12" y1="8" x2="12" y2="16"></line></svg>
+                                            </span>
+                                            <span>First-Time Sellers</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#services" class="mega-menu-item" data-service="nri-expat">
+                                            <span class="mega-menu-icon">
+                                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+                                            </span>
+                                            <span>NRI & Expat Assistance</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#services" class="mega-menu-item" data-service="reloc">
+                                            <span class="mega-menu-icon">
+                                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21V5a2 2 0 0 0-2-2H7a2 2 0 0 0-2 2v16"></path><path d="M8 21v-4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v4"></path></svg>
+                                            </span>
+                                            <span>Corporate Relocation</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#services" class="mega-menu-item" data-service="owner-rep">
+                                            <span class="mega-menu-icon">
+                                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+                                            </span>
+                                            <span>Owner Representation</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#services" class="mega-menu-item" data-service="client-rep">
+                                            <span class="mega-menu-icon">
+                                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="7" r="4"></circle><path d="M5.5 21a6.5 6.5 0 0 1 13 0"></path></svg>
+                                            </span>
+                                            <span>Client Representation</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                <li><a href="#experience" class="nav-link" id="link-experience">The CEA Experience</a></li>
+                <li><a href="#properties" class="nav-link" id="link-properties">Properties</a></li>
+                <li><a href="#testimonials" class="nav-link" id="link-testimonials">Testimonials</a></li>
+                <li><a href="#contact" class="nav-link btn-nav-contact" id="link-contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- SECTION 1: Fullscreen Hero -->
+    <section id="home" class="hero-section">
+        <!-- Background Skyline Image -->
+        <div class="hero-bg" style="background-image: url('bangalore_skyline.png');"></div>
+        <!-- Dark Overlay -->
+        <div class="hero-overlay"></div>
+
+        <div class="hero-content animate-fade-up">
+            <span class="hero-tagline">Buy • Sell • Rent • Relocate</span>
+            <h1 class="brand-title">
+                Corporate Estate<br>
+                <span class="highlight">Avenue</span>
+            </h1>
+            <p class="brand-subtitle">Premium Property Management & Real Estate Consulting Services in Bangalore</p>
+            <div class="hero-actions">
+                <a href="#properties" class="btn-primary">Explore Properties</a>
+                <a href="#contact" class="btn-secondary">Contact Us</a>
+            </div>
+        </div>
+
+        <div class="scroll-indicator">
+            <span class="mouse-icon">
+                <span class="wheel"></span>
+            </span>
+            <span class="scroll-text">Scroll to explore</span>
+        </div>
+    </section>
+
+    <!-- SECTION 2: About Us -->
+    <section id="about" class="about-section">
+        <div class="section-container">
+            <div class="about-header">
+                <span class="section-badge">Excellence & Responsibility</span>
+                <h2 class="section-title">About Our Firm</h2>
+                <div class="divider center"></div>
+            </div>
+            
+            <div class="about-grid">
+                <!-- Left: Core philosophy and key bullet points -->
+                <div class="about-philosophies">
+                    <blockquote class="about-quote">
+                        “Property management is more than just a business, it is a responsibility.”
+                    </blockquote>
+                    <p class="about-desc">
+                        Corporate Estate Avenue stands as a premier advisory and real estate consulting firm in Bangalore. With deep localized roots and high-level corporate competence, we bridge the gap between properties and dreams, offering customized handovers and representation services.
+                    </p>
+                    
+                    <ul class="about-highlights-list">
+                        <li>
+                            <span class="highlight-bullet">✓</span>
+                            <span><strong>Close to two decades</strong> of professional real estate experience in Bangalore.</span>
+                        </li>
+                        <li>
+                            <span class="highlight-bullet">✓</span>
+                            <span><strong>Customer-centric approach</strong> mapping individual client goals.</span>
+                        </li>
+                        <li>
+                            <span class="highlight-bullet">✓</span>
+                            <span><strong>Transparency in communication</strong> with no hidden costs or gray areas.</span>
+                        </li>
+                        <li>
+                            <span class="highlight-bullet">✓</span>
+                            <span><strong>Ethical business practices</strong> verifying documentation before listing.</span>
+                        </li>
+                        <li>
+                            <span class="highlight-bullet">✓</span>
+                            <span><strong>Strong client relationships</strong> extending way beyond final legal handovers.</span>
+                        </li>
+                        <li>
+                            <span class="highlight-bullet">✓</span>
+                            <span><strong>Specialized in Bangalore</strong> premium micro-markets and commercial hubs.</span>
+                        </li>
+                        <li>
+                            <span class="highlight-bullet">✓</span>
+                            <span>Helping <strong>families and businesses</strong> find their absolute ideal properties.</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Right: Founder story card (Sajjad Pasha) -->
+                <div class="founder-card-panel">
+                    <div class="founder-card glass-panel">
+                        <div class="founder-avatar-box">
+                            <img src="sajjad_pasha.jpg" alt="Sajjad Pasha" class="founder-avatar-img">
+                        </div>
+                        <h3 class="founder-name">Sajjad Pasha</h3>
+                        <p class="founder-title">Founder & Managing Director</p>
+                        <div class="divider center card-divider"></div>
+                        <p class="founder-story-text">
+                            With an extensive career centered around sales, client relationship management, and premium real estate consulting, Sajjad Pasha established Corporate Estate Avenue to bring ethical standardizations to Bangalore's real estate market. 
+                        </p>
+                        <p class="founder-story-text">
+                            Specializing in servicing expat clients, multinational corporate groups, and relocation agencies, he has built a reputation for smooth, stress-free transaction closures. His vision remains focused on building long-term trust, offering research-backed advisory that guarantees peace of mind.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 3: Why Choose Us -->
+    <section id="why-choose" class="why-section">
+        <div class="section-container">
+            <div class="why-header">
+                <span class="section-badge">Our Advantage</span>
+                <h2 class="section-title">Why Partner With Us</h2>
+                <div class="divider center"></div>
+                <p class="section-desc max-width-center">
+                    We deliver customized, premium services engineered around transparency, research, and client protection.
+                </p>
+            </div>
+            
+            <div class="why-grid">
+                <!-- 1. Owner Representation -->
+                <div class="why-card glass-panel">
+                    <div class="why-card-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                            <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                        </svg>
+                    </div>
+                    <h3 class="why-card-title">Owner Representation</h3>
+                    <p class="why-card-desc">Exclusive marketing strategies, agent network syndication, and targeted property campaigns for asset owners.</p>
+                </div>
+
+                <!-- 2. Client Representation -->
+                <div class="why-card glass-panel">
+                    <div class="why-card-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                            <circle cx="9" cy="7" r="4"></circle>
+                            <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                            <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                        </svg>
+                    </div>
+                    <h3 class="why-card-title">Client Representation</h3>
+                    <p class="why-card-desc">Tailored, conflict-free buying and leasing assistance focusing strictly on the buyer's best interests.</p>
+                </div>
+
+                <!-- 3. Residential Property Consulting -->
+                <div class="why-card glass-panel">
+                    <div class="why-card-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                            <circle cx="12" cy="7" r="4"></circle>
+                        </svg>
+                    </div>
+                    <h3 class="why-card-title">Residential Consulting</h3>
+                    <p class="why-card-desc">Guidance through premium apartments, luxury villas, and layouts in Bangalore's key enclaves.</p>
+                </div>
+
+                <!-- 4. Commercial Property Services -->
+                <div class="why-card glass-panel">
+                    <div class="why-card-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect>
+                            <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
+                        </svg>
+                    </div>
+                    <h3 class="why-card-title">Commercial Services</h3>
+                    <p class="why-card-desc">Corporate office space leasing, tech-park acquisitions, and strategic retail space consultancy.</p>
+                </div>
+
+                <!-- 5. Property Management -->
+                <div class="why-card glass-panel">
+                    <div class="why-card-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                            <line x1="9" y1="3" x2="9" y2="21"></line>
+                            <line x1="15" y1="3" x2="15" y2="21"></line>
+                            <line x1="3" y1="9" x2="21" y2="9"></line>
+                            <line x1="3" y1="15" x2="21" y2="15"></line>
+                        </svg>
+                    </div>
+                    <h3 class="why-card-title">Property Management</h3>
+                    <p class="why-card-desc">End-to-end site monitoring, periodic maintenance coordination, tenant vetting, and legal lease administration.</p>
+                </div>
+
+                <!-- 6. Corporate Relocation -->
+                <div class="why-card glass-panel">
+                    <div class="why-card-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <polyline points="12 6 12 12 16 14"></polyline>
+                        </svg>
+                    </div>
+                    <h3 class="why-card-title">Corporate Relocation</h3>
+                    <p class="why-card-desc">Comprehensive solutions for relocating businesses, workspace configuration setups, and vendor management.</p>
+                </div>
+            </div>
+
+            <!-- Additional feature list container -->
+            <div class="why-highlights-block glass-panel">
+                <h4 class="why-highlights-title">Core Operating Standards</h4>
+                <div class="why-highlights-grid">
+                    <div class="why-highlight-item">
+                        <span class="highlight-bullet">✓</span>
+                        <span><strong>Transparency in Information</strong>: All documentations, titles, and price points are verified up-front.</span>
+                    </div>
+                    <div class="why-highlight-item">
+                        <span class="highlight-bullet">✓</span>
+                        <span><strong>Ethical Business Practices</strong>: Honesty and fairness in every handshake and legal agreement.</span>
+                    </div>
+                    <div class="why-highlight-item">
+                        <span class="highlight-bullet">✓</span>
+                        <span><strong>Extensive Research-Based Recommendations</strong>: Advisory driven by micro-market analytics and pricing forecasts.</span>
+                    </div>
+                    <div class="why-highlight-item">
+                        <span class="highlight-bullet">✓</span>
+                        <span><strong>Customer-First Approach</strong>: Designing searches around your specific priorities and family configurations.</span>
+                    </div>
+                    <div class="why-highlight-item">
+                        <span class="highlight-bullet">✓</span>
+                        <span><strong>Strong Network Across Bangalore</strong>: Unmatched reach into premium developments, landlords, and layout networks.</span>
+                    </div>
+                    <div class="why-highlight-item">
+                        <span class="highlight-bullet">✓</span>
+                        <span><strong>Result-Oriented Team</strong>: Experienced negotiators dedicated to securing the finest deals for you.</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 4: Services Grid -->
+    <section id="services" class="services-section">
+        <div class="section-container">
+            <div class="services-header">
+                <span class="section-badge">Services Portfolio</span>
+                <h2 class="section-title">Bespoke Real Estate Services</h2>
+                <div class="divider center"></div>
+                <p class="section-desc max-width-center">
+                    Providing specialized real estate advisory, representation, and relocation strategies tailored for global businesses and families.
+                </p>
+            </div>
+            
+            <div class="services-grid">
+                <!-- 1. Residential Property Services -->
+                <article class="service-box glass-panel">
+                    <div class="service-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="service-box-title">Residential Services</h3>
+                    <ul class="service-features-list">
+                        <li>Property buying assistance</li>
+                        <li>Rental support & lease coordination</li>
+                        <li>Family home search & school mappings</li>
+                        <li>Tenant support & local integration</li>
+                    </ul>
+                </article>
+
+                <!-- 2. Commercial Property Services -->
+                <article class="service-box glass-panel">
+                    <div class="service-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect>
+                            <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
+                        </svg>
+                    </div>
+                    <h3 class="service-box-title">Commercial Services</h3>
+                    <ul class="service-features-list">
+                        <li>Office space consulting & advisory</li>
+                        <li>Furnished & semi-furnished setups</li>
+                        <li>Business relocation support</li>
+                        <li>Commercial micro-market analytics</li>
+                    </ul>
+                </article>
+
+                <!-- 3. Property Management -->
+                <article class="service-box glass-panel">
+                    <div class="service-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="service-box-title">Property Management</h3>
+                    <ul class="service-features-list">
+                        <li>Property inspection & reports</li>
+                        <li>Maintenance & repair support</li>
+                        <li>Tenant coordination & rent collection</li>
+                        <li>Documentation & negotiation support</li>
+                    </ul>
+                </article>
+
+                <!-- 4. Corporate Relocation -->
+                <article class="service-box glass-panel">
+                    <div class="service-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <polyline points="12 6 12 12 16 14"></polyline>
+                        </svg>
+                    </div>
+                    <h3 class="service-box-title">Corporate Relocation</h3>
+                    <ul class="service-features-list">
+                        <li>Office relocation services</li>
+                        <li>Premium business location advice</li>
+                        <li>Vendor coordination & fit-out setups</li>
+                        <li>Expat settlement & search assistance</li>
+                    </ul>
+                </article>
+
+                <!-- 5. Owner Representation -->
+                <article class="service-box glass-panel">
+                    <div class="service-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="service-box-title">Owner Representation</h3>
+                    <ul class="service-features-list">
+                        <li>Professional marketing of properties</li>
+                        <li>Exposure through trusted agent network</li>
+                        <li>Email campaigns & listings management</li>
+                        <li>Direct calling & buyer matching strategy</li>
+                    </ul>
+                </article>
+
+                <!-- 6. Client Representation -->
+                <article class="service-box glass-panel">
+                    <div class="service-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="7" r="4"></circle>
+                            <path d="M5.5 21a6.5 6.5 0 0 1 13 0"></path>
+                        </svg>
+                    </div>
+                    <h3 class="service-box-title">Client Representation</h3>
+                    <ul class="service-features-list">
+                        <li>Personalized client property search</li>
+                        <li>Rigorous negotiation support</li>
+                        <li>Utility setups & layout alignments</li>
+                        <li>End-to-end closing support</li>
+                    </ul>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 5: The CEA Experience -->
+    <section id="experience" class="experience-section">
+        <div class="section-container">
+            <div class="experience-header">
+                <span class="section-badge">How We Work</span>
+                <h2 class="section-title">The CEA Experience</h2>
+                <div class="divider center"></div>
+                <p class="section-desc max-width-center">
+                    A professional step-by-step process engineered to guide you from initial requirement mapping to successful legal handover.
+                </p>
+            </div>
+            
+            <div class="timeline-container">
+                <!-- Step 1 -->
+                <div class="timeline-step">
+                    <div class="timeline-node">1</div>
+                    <div class="timeline-content glass-panel">
+                        <div class="timeline-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                                <polyline points="14 2 14 8 20 8"></polyline>
+                                <line x1="16" y1="13" x2="8" y2="13"></line>
+                                <line x1="16" y1="17" x2="8" y2="17"></line>
+                                <polyline points="10 9 9 9 8 9"></polyline>
+                            </svg>
+                        </div>
+                        <h3 class="timeline-step-title">1. Assessment</h3>
+                        <p class="timeline-step-desc">We begin by thoroughly understanding your commercial space, investment parameters, or residential requirements, and providing mapping recommendations.</p>
+                    </div>
+                </div>
+
+                <!-- Step 2 -->
+                <div class="timeline-step">
+                    <div class="timeline-node">2</div>
+                    <div class="timeline-content glass-panel">
+                        <div class="timeline-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <circle cx="11" cy="11" r="8"></circle>
+                                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                            </svg>
+                        </div>
+                        <h3 class="timeline-step-title">2. Analysis</h3>
+                        <p class="timeline-step-desc">We compile research-backed recommendations driven by local market data, ensuring fully transparent property documentations and analysis.</p>
+                    </div>
+                </div>
+
+                <!-- Step 3 -->
+                <div class="timeline-step">
+                    <div class="timeline-node">3</div>
+                    <div class="timeline-content glass-panel">
+                        <div class="timeline-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                                <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                            </svg>
+                        </div>
+                        <h3 class="timeline-step-title">3. Negotiation</h3>
+                        <p class="timeline-step-desc">We represent you in negotiations to lock in competitive pricing. Our team conducts full legal verifications and document preparations.</p>
+                    </div>
+                </div>
+
+                <!-- Step 4 -->
+                <div class="timeline-step">
+                    <div class="timeline-node">4</div>
+                    <div class="timeline-content glass-panel">
+                        <div class="timeline-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <polyline points="20 6 9 17 4 12"></polyline>
+                            </svg>
+                        </div>
+                        <h3 class="timeline-step-title">4. Agreement & Closure</h3>
+                        <p class="timeline-step-desc">We assist you through the final stamp duties, registrations, utility handovers, and setups for a completely smooth transaction completion.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 6: Featured Properties -->
+    <section id="properties" class="properties-section">
+        <div class="section-container">
+            <div class="properties-header">
+                <span class="section-badge">Exclusive Listings</span>
+                <h2 class="section-title">Featured Properties</h2>
+                <div class="divider center"></div>
+            </div>
+            
+            <div class="properties-grid">
+                <!-- Property 1 -->
+                <article class="property-card glass-panel">
+                    <div class="property-image-box">
+                        <img src="prop_apartment.png" alt="Luxury Apartment in Whitefield" class="property-img">
+                        <span class="property-tag">For Sale</span>
+                    </div>
+                    <div class="property-content">
+                        <h3 class="property-title">Luxury Apartment in Whitefield</h3>
+                        <div class="property-location">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="loc-icon">
+                                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                                <circle cx="12" cy="10" r="3"></circle>
+                            </svg>
+                            <span>Whitefield, Bangalore</span>
+                        </div>
+                        <div class="property-price">₹2.45 Cr</div>
+                        <div class="property-specs">
+                            <span class="spec-item"><strong>3</strong> BHK</span>
+                            <span class="spec-item"><strong>2200</strong> Sq.Ft</span>
+                            <span class="spec-item"><strong>2</strong> Parking</span>
+                        </div>
+                        <a href="#contact" class="btn-card-action">Inquire Now</a>
+                    </div>
+                </article>
+
+                <!-- Property 2 -->
+                <article class="property-card glass-panel">
+                    <div class="property-image-box">
+                        <img src="prop_villa.png" alt="Villa in Sarjapur Road" class="property-img">
+                        <span class="property-tag">For Sale</span>
+                    </div>
+                    <div class="property-content">
+                        <h3 class="property-title">Villa in Sarjapur Road</h3>
+                        <div class="property-location">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="loc-icon">
+                                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                                <circle cx="12" cy="10" r="3"></circle>
+                            </svg>
+                            <span>Sarjapur Road, Bangalore</span>
+                        </div>
+                        <div class="property-price">₹4.80 Cr</div>
+                        <div class="property-specs">
+                            <span class="spec-item"><strong>4</strong> BHK</span>
+                            <span class="spec-item"><strong>3800</strong> Sq.Ft</span>
+                            <span class="spec-item"><strong>3</strong> Parking</span>
+                        </div>
+                        <a href="#contact" class="btn-card-action">Inquire Now</a>
+                    </div>
+                </article>
+
+                <!-- Property 3 -->
+                <article class="property-card glass-panel">
+                    <div class="property-image-box">
+                        <img src="prop_commercial.png" alt="Commercial Office in Indiranagar" class="property-img">
+                        <span class="property-tag">For Lease</span>
+                    </div>
+                    <div class="property-content">
+                        <h3 class="property-title">Commercial Office in Indiranagar</h3>
+                        <div class="property-location">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="loc-icon">
+                                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                                <circle cx="12" cy="10" r="3"></circle>
+                            </svg>
+                            <span>Indiranagar, Bangalore</span>
+                        </div>
+                        <div class="property-price">₹3.5 Lakhs / mo</div>
+                        <div class="property-specs">
+                            <span class="spec-item"><strong>Corporate</strong> Fit-out</span>
+                            <span class="spec-item"><strong>4500</strong> Sq.Ft</span>
+                            <span class="spec-item"><strong>5</strong> Parking</span>
+                        </div>
+                        <a href="#contact" class="btn-card-action">Inquire Now</a>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 7: Testimonials -->
+    <section id="testimonials" class="testimonials-section">
+        <div class="section-container">
+            <div class="testimonials-header">
+                <span class="section-badge">Client Testimonials</span>
+                <h2 class="section-title">What Our Clients Say</h2>
+                <div class="divider center"></div>
+            </div>
+            
+            <div class="testimonials-grid">
+                <!-- Testimonial 1 -->
+                <blockquote class="testimonial-card glass-panel">
+                    <div class="quote-icon">“</div>
+                    <div class="star-rating">★★★★★</div>
+                    <p class="testimonial-text">
+                        "The level of transparency and customer satisfaction provided by Corporate Estate Avenue is unmatched. They verified all titles beforehand and helped us buy our home in Whitefield with complete peace of mind."
+                    </p>
+                    <cite class="testimonial-author">
+                        <span class="author-name">Aditya Sharma</span>
+                        <span class="author-title">Executive Director, Tech Corp</span>
+                    </cite>
+                </blockquote>
+
+                <!-- Testimonial 2 -->
+                <blockquote class="testimonial-card glass-panel">
+                    <div class="quote-icon">“</div>
+                    <div class="star-rating">★★★★★</div>
+                    <p class="testimonial-text">
+                        "Courteous, helpful, and highly professional. Relocating our office to Indiranagar was handled flawlessly from lease negotiations to documentation. Highly recommend their corporate consulting!"
+                    </p>
+                    <cite class="testimonial-author">
+                        <span class="author-name">Preeti Nair</span>
+                        <span class="author-title">Operations Lead, Invenio India</span>
+                    </cite>
+                </blockquote>
+
+                <!-- Testimonial 3 -->
+                <blockquote class="testimonial-card glass-panel">
+                    <div class="quote-icon">“</div>
+                    <div class="star-rating">★★★★★</div>
+                    <p class="testimonial-text">
+                        "Their property management service is exceptional. As an NRI owner, their periodic monitoring reports, tenant coordination, and ethical business approach have built a highly trustworthy long-term relationship."
+                    </p>
+                    <cite class="testimonial-author">
+                        <span class="author-name">Rohan Murthy</span>
+                        <span class="author-title">Asset Investor, UK</span>
+                    </cite>
+                </blockquote>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 8: Contact Us -->
+    <section id="contact" class="contact-section">
+        <div class="section-container">
+            <div class="contact-grid">
+                <div class="contact-info">
+                    <span class="section-badge">Get In Touch</span>
+                    <h2 class="section-title">Schedule a Consultation</h2>
+                    <div class="divider"></div>
+                    <p class="section-desc">
+                        Have property requirements or need management advice? Submit the form below, and our leadership team will reach out to schedule an advisory consultation.
+                    </p>
+                    
+                    <div class="contact-details">
+                        <div class="detail-item">
+                            <div class="detail-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                                    <circle cx="12" cy="7" r="4"></circle>
+                                </svg>
+                            </div>
+                            <div class="detail-text-box">
+                                <span class="detail-label">Principal Consultant</span>
+                                <span class="detail-value">Sajjad Pasha</span>
+                            </div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+                                </svg>
+                            </div>
+                            <div class="detail-text-box">
+                                <span class="detail-label">Phone Support</span>
+                                <span class="detail-value">+91 9880011922</span>
+                            </div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                                    <polyline points="22,6 12,13 2,6"></polyline>
+                                </svg>
+                            </div>
+                            <div class="detail-text-box">
+                                <span class="detail-label">Official Email</span>
+                                <span class="detail-value">sajjad@corporateestateavenue.com</span>
+                            </div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                                    <circle cx="12" cy="10" r="3"></circle>
+                                </svg>
+                            </div>
+                            <div class="detail-text-box">
+                                <span class="detail-label">Office Base</span>
+                                <span class="detail-value">Bangalore, India</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="contact-form-panel">
+                    <form class="glass-form" id="js-contact-form">
+                        <div class="form-group">
+                            <label for="name">Full Name</label>
+                            <input type="text" id="name" required placeholder="John Doe">
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email Address</label>
+                            <input type="email" id="email" required placeholder="john@example.com">
+                        </div>
+                        <div class="form-group-row">
+                            <div class="form-group">
+                                <label for="phone">Phone Number</label>
+                                <input type="tel" id="phone" placeholder="+91 98765 43210">
+                            </div>
+                            <div class="form-group">
+                                <label for="service">Interested In</label>
+                                <select id="service">
+                                    <option value="pm">Property Management</option>
+                                    <option value="res">Residential Consulting</option>
+                                    <option value="comm">Commercial Services</option>
+                                    <option value="reloc">Corporate Relocation</option>
+                                    <option value="owner">Owner Representation</option>
+                                    <option value="client">Client Representation</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="message">Message</label>
+                            <textarea id="message" rows="4" placeholder="Describe your property requirements..."></textarea>
+                        </div>
+                        <button type="submit" class="btn-primary btn-submit">Submit Inquiry</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-top">
+                <div class="footer-brand">
+                    <span class="logo-symbol">CEA</span>
+                    <span class="logo-text">Corporate Estate Avenue</span>
+                </div>
+                <ul class="footer-links">
+                    <li><a href="#home" class="footer-link">Home</a></li>
+                    <li><a href="#about" class="footer-link">About</a></li>
+                    <li><a href="#services" class="footer-link">Services</a></li>
+                    <li><a href="#properties" class="footer-link">Properties</a></li>
+                    <li><a href="#testimonials" class="footer-link">Testimonials</a></li>
+                    <li><a href="#contact" class="footer-link">Contact</a></li>
+                </ul>
+                <div class="footer-socials">
+                    <a href="https://wa.me/919880011922" target="_blank" rel="noopener noreferrer" aria-label="Contact us on WhatsApp" class="footer-social-icon">
+                        <svg viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M19.057 4.914c-1.89-1.89-4.4-2.93-7.07-2.93-5.51 0-10 4.49-10 10 0 1.76.46 3.47 1.33 4.98L2 22l5.23-1.37c1.47.8 3.14 1.22 4.83 1.23h.01c5.51 0 10-4.49 10-10 0-2.67-1.04-5.18-2.93-7.07zm-7.07 15.35c-1.49 0-2.95-.4-4.22-1.15l-.3-.18-3.14.82.84-3.06-.2-.31c-.82-1.3-1.26-2.82-1.26-4.38 0-4.57 3.72-8.3 8.3-8.3 2.22 0 4.3.87 5.87 2.43 1.57 1.57 2.43 3.65 2.43 5.87 0 4.57-3.72 8.3-8.3 8.3zm4.56-6.23c-.25-.13-1.48-.73-1.71-.81-.23-.08-.4-.13-.57.13-.17.26-.66.82-.81.99-.15.17-.3.19-.55.06-1.07-.54-1.87-1-2.6-2.27-.19-.32.19-.3.54-1 .09-.17.04-.33-.02-.46-.06-.13-.57-1.37-.78-1.88-.2-.5-.43-.43-.59-.44-.15 0-.33-.01-.51-.01-.18 0-.47.07-.72.34-.25.27-1 .95-1 2.33s1 2.7 1.14 2.9c.14.2 1.97 3.01 4.77 4.22.67.29 1.19.46 1.6.59.68.22 1.3.19 1.79.11.55-.08 1.69-.69 1.93-1.36.24-.67.24-1.24.17-1.36-.07-.12-.27-.19-.52-.32z"/>
+                        </svg>
+                    </a>
+                    <a href="https://instagram.com/corporateestateavenue" target="_blank" rel="noopener noreferrer" aria-label="Follow us on Instagram" class="footer-social-icon">
+                        <svg viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.051.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+            
+            <div class="footer-middle">
+                <div class="footer-services-menu">
+                    <h4>Our Services</h4>
+                    <ul class="footer-services-links">
+                        <li><a href="#services">Residential Property Services</a></li>
+                        <li><a href="#services">Commercial Property Services</a></li>
+                        <li><a href="#services">Property Management</a></li>
+                        <li><a href="#services">Corporate Relocation</a></li>
+                        <li><a href="#services">Owner Representation</a></li>
+                        <li><a href="#services">Client Representation</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <div class="footer-left">
+                    <span class="location-pulse"></span>
+                    <span>Bengaluru, India</span>
+                </div>
+                <div class="footer-copyright">
+                    &copy; 2026 Corporate Estate Avenue. All Rights Reserved.
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Floating WhatsApp and Instagram Icons (Bottom Right) -->
+    <div class="floating-social-box">
+        <a href="https://wa.me/919880011922" target="_blank" rel="noopener noreferrer" aria-label="Contact us on WhatsApp" class="social-icon" id="link-whatsapp">
+            <svg viewBox="0 0 24 24" fill="currentColor">
+                <path d="M19.057 4.914c-1.89-1.89-4.4-2.93-7.07-2.93-5.51 0-10 4.49-10 10 0 1.76.46 3.47 1.33 4.98L2 22l5.23-1.37c1.47.8 3.14 1.22 4.83 1.23h.01c5.51 0 10-4.49 10-10 0-2.67-1.04-5.18-2.93-7.07zm-7.07 15.35c-1.49 0-2.95-.4-4.22-1.15l-.3-.18-3.14.82.84-3.06-.2-.31c-.82-1.3-1.26-2.82-1.26-4.38 0-4.57 3.72-8.3 8.3-8.3 2.22 0 4.3.87 5.87 2.43 1.57 1.57 2.43 3.65 2.43 5.87 0 4.57-3.72 8.3-8.3 8.3zm4.56-6.23c-.25-.13-1.48-.73-1.71-.81-.23-.08-.4-.13-.57.13-.17.26-.66.82-.81.99-.15.17-.3.19-.55.06-1.07-.54-1.87-1-2.6-2.27-.19-.32.19-.3.54-1 .09-.17.04-.33-.02-.46-.06-.13-.57-1.37-.78-1.88-.2-.5-.43-.43-.59-.44-.15 0-.33-.01-.51-.01-.18 0-.47.07-.72.34-.25.27-1 .95-1 2.33s1 2.7 1.14 2.9c.14.2 1.97 3.01 4.77 4.22.67.29 1.19.46 1.6.59.68.22 1.3.19 1.79.11.55-.08 1.69-.69 1.93-1.36.24-.67.24-1.24.17-1.36-.07-.12-.27-.19-.52-.32z"/>
+            </svg>
+        </a>
+        <a href="https://instagram.com/corporateestateavenue" target="_blank" rel="noopener noreferrer" aria-label="Follow us on Instagram" class="social-icon" id="link-instagram">
+            <svg viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.051.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/>
+            </svg>
+        </a>
+    </div>
+
+    <!-- SECTION 9: Upload Property Modal -->
+    <div id="js-upload-modal" class="modal-overlay" aria-hidden="true" role="dialog">
+        <div class="modal-container glass-panel animate-scale-up">
+            <button class="modal-close" id="js-modal-close" aria-label="Close Modal">&times;</button>
+            <div class="modal-header">
+                <span class="section-badge">Listing Portal</span>
+                <h3 class="modal-title">Upload Your Property</h3>
+                <div class="divider center"></div>
+                <p class="modal-subtitle">Share your property details with our premium corporate network</p>
+            </div>
+            
+            <form class="modal-form" id="js-upload-form">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="uploader-name">Full Name</label>
+                        <input type="text" id="uploader-name" required placeholder="John Doe">
+                    </div>
+                    <div class="form-group">
+                        <label for="uploader-phone">Phone Number</label>
+                        <input type="tel" id="uploader-phone" required placeholder="+91 98765 43210">
+                    </div>
+                    <div class="form-group">
+                        <label for="uploader-email">Email Address</label>
+                        <input type="email" id="uploader-email" required placeholder="john@example.com">
+                    </div>
+                    <div class="form-group">
+                        <label for="property-type">Property Type</label>
+                        <select id="property-type" required>
+                            <option value="">Select Type...</option>
+                            <option value="Luxury Apartment">Luxury Apartment</option>
+                            <option value="Premium Villa">Premium Villa</option>
+                            <option value="Commercial Office">Commercial Office</option>
+                            <option value="Retail Space">Retail Space</option>
+                            <option value="Plot / Land">Plot / Land</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="property-name">Property Name</label>
+                        <input type="text" id="property-name" required placeholder="Prestige Landmark">
+                    </div>
+                    <div class="form-group">
+                        <label for="property-location">Property Location</label>
+                        <input type="text" id="property-location" required placeholder="Indiranagar, Bangalore">
+                    </div>
+                    <div class="form-group">
+                        <label for="property-bhk">BHK / Area Details</label>
+                        <input type="text" id="property-bhk" required placeholder="3 BHK - 2500 Sq.Ft">
+                    </div>
+                    <div class="form-group">
+                        <label for="property-price">Expected Price (₹)</label>
+                        <input type="text" id="property-price" required placeholder="e.g. 2.5 Crore or 1.5 Lakhs / mo">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Property Images</label>
+                    <div class="drag-drop-area" id="js-drag-drop-area">
+                        <div class="drag-drop-content">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="upload-cloud-icon">
+                                <path d="M21.2 15c.6-1.1.8-2.3.8-3.5 0-4.4-3.6-8-8-8-3.1 0-5.8 1.8-7.1 4.5C5.7 7.6 4.4 8 3 8c-1.7 0-3 1.3-3 3 0 .7.3 1.4.7 1.9"></path>
+                                <path d="M16 16.5L12 12.5 8 16.5"></path>
+                                <line x1="12" y1="12.5" x2="12" y2="21.5"></line>
+                            </svg>
+                            <span class="drag-drop-text">Drag & drop images here or <span class="browse-link">browse</span></span>
+                            <span class="drag-drop-subtext">Supports PNG, JPG, JPEG (Max 5 images)</span>
+                        </div>
+                        <input type="file" id="uploader-files" multiple accept="image/*" class="file-input-hidden">
+                    </div>
+                    <div class="file-preview-grid" id="js-file-preview-grid"></div>
+                </div>
+
+                <div class="form-group">
+                    <label for="property-description">Description</label>
+                    <textarea id="property-description" rows="3" placeholder="Provide details about amenities, parking, age of property..."></textarea>
+                </div>
+
+                <p class="modal-notice">Our team will contact you shortly after reviewing your property.</p>
+
+                <div class="modal-actions">
+                    <button type="submit" class="btn-primary btn-submit-modal">Submit Property</button>
+                    <a href="https://wa.me/919880011922" target="_blank" rel="noopener noreferrer" class="btn-secondary btn-contact-modal">
+                        <svg viewBox="0 0 24 24" fill="currentColor" class="wa-btn-icon">
+                            <path d="M19.057 4.914c-1.89-1.89-4.4-2.93-7.07-2.93-5.51 0-10 4.49-10 10 0 1.76.46 3.47 1.33 4.98L2 22l5.23-1.37c1.47.8 3.14 1.22 4.83 1.23h.01c5.51 0 10-4.49 10-10 0-2.67-1.04-5.18-2.93-7.07zm-7.07 15.35c-1.49 0-2.95-.4-4.22-1.15l-.3-.18-3.14.82.84-3.06-.2-.31c-.82-1.3-1.26-2.82-1.26-4.38 0-4.57 3.72-8.3 8.3-8.3 2.22 0 4.3.87 5.87 2.43 1.57 1.57 2.43 3.65 2.43 5.87 0 4.57-3.72 8.3-8.3 8.3zm4.56-6.23c-.25-.13-1.48-.73-1.71-.81-.23-.08-.4-.13-.57.13-.17.26-.66.82-.81.99-.15.17-.3.19-.55.06-1.07-.54-1.87-1-2.6-2.27-.19-.32.19-.3.54-1 .09-.17.04-.33-.02-.46-.06-.13-.57-1.37-.78-1.88-.2-.5-.43-.43-.59-.44-.15 0-.33-.01-.51-.01-.18 0-.47.07-.72.34-.25.27-1 .95-1 2.33s1 2.7 1.14 2.9c.14.2 1.97 3.01 4.77 4.22.67.29 1.19.46 1.6.59.68.22 1.3.19 1.79.11.55-.08 1.69-.69 1.93-1.36.24-.67.24-1.24.17-1.36-.07-.12-.27-.19-.52-.32z"/>
+                        </svg>
+                        Contact Team
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
