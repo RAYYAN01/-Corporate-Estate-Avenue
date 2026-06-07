@@ -7,11 +7,17 @@ const dbHelpers = require('./database');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// Ensure uploads directory exists
-const UPLOADS_DIR = path.join(__dirname, 'uploads');
-if (!fs.existsSync(UPLOADS_DIR)) {
-    fs.mkdirSync(UPLOADS_DIR, { recursive: true });
-    console.log('Created uploads directory:', UPLOADS_DIR);
+// Ensure uploads directory exists (use /tmp on Vercel's read-only filesystem)
+const UPLOADS_DIR = process.env.VERCEL
+    ? path.join('/tmp', 'uploads')
+    : path.join(__dirname, 'uploads');
+try {
+    if (!fs.existsSync(UPLOADS_DIR)) {
+        fs.mkdirSync(UPLOADS_DIR, { recursive: true });
+        console.log('Created uploads directory:', UPLOADS_DIR);
+    }
+} catch (err) {
+    console.error('Could not create uploads directory:', err.message);
 }
 
 // Configure Multer for property image storage
@@ -201,6 +207,10 @@ app.use((req, res) => {
     res.sendFile(path.join(__dirname, 'index.html'));
 });
 
-app.listen(PORT, () => {
-    console.log(`Corporate Estate Avenue Backend running at http://localhost:${PORT}`);
-});
+if (require.main === module) {
+    app.listen(PORT, () => {
+        console.log(`Corporate Estate Avenue Backend running at http://localhost:${PORT}`);
+    });
+}
+
+module.exports = app;
