@@ -1,17 +1,31 @@
-const sqlite3 = require('sqlite3').verbose();
 const path = require('path');
 
 const DB_PATH = process.env.VERCEL
     ? path.join('/tmp', 'database.sqlite')
     : path.join(__dirname, 'database.sqlite');
-const db = new sqlite3.Database(DB_PATH, (err) => {
-    if (err) {
-        console.error('Error opening database:', err.message);
-    } else {
-        console.log('Connected to the SQLite database.');
-        initializeTables();
-    }
-});
+
+// sqlite3 is a native module and can fail to load in serverless environments
+// (binary built for the wrong platform). Guard against that so the rest of
+// the app keeps working — DB-backed routes will simply report unavailable.
+let db = null;
+try {
+    const sqlite3 = require('sqlite3').verbose();
+    db = new sqlite3.Database(DB_PATH, (err) => {
+        if (err) {
+            console.error('Error opening database:', err.message);
+            db = null;
+        } else {
+            console.log('Connected to the SQLite database.');
+            initializeTables();
+        }
+    });
+} catch (err) {
+    console.error('SQLite module unavailable, database features disabled:', err.message);
+}
+
+function unavailable() {
+    return Promise.reject(new Error('Database is not available in this environment.'));
+}
 
 function initializeTables() {
     db.serialize(() => {
@@ -56,6 +70,7 @@ function initializeTables() {
 const dbHelpers = {
     // Save inquiry
     saveInquiry: (inquiry) => {
+        if (!db) return unavailable();
         return new Promise((resolve, reject) => {
             const { name, email, phone, service, message } = inquiry;
             const query = `INSERT INTO inquiries (name, email, phone, service, message) VALUES (?, ?, ?, ?, ?)`;
@@ -68,6 +83,7 @@ const dbHelpers = {
 
     // Get all inquiries (sorted by latest)
     getInquiries: () => {
+        if (!db) return unavailable();
         return new Promise((resolve, reject) => {
             const query = `SELECT * FROM inquiries ORDER BY created_at DESC`;
             db.all(query, [], (err, rows) => {
@@ -79,6 +95,7 @@ const dbHelpers = {
 
     // Delete inquiry
     deleteInquiry: (id) => {
+        if (!db) return unavailable();
         return new Promise((resolve, reject) => {
             const query = `DELETE FROM inquiries WHERE id = ?`;
             db.run(query, [id], function(err) {
@@ -90,6 +107,7 @@ const dbHelpers = {
 
     // Save property listing
     saveProperty: (property) => {
+        if (!db) return unavailable();
         return new Promise((resolve, reject) => {
             const { name, phone, email, property_type, property_name, property_location, property_bhk, property_price, property_description, images } = property;
             const query = `
@@ -109,6 +127,7 @@ const dbHelpers = {
 
     // Get all properties (sorted by latest)
     getProperties: () => {
+        if (!db) return unavailable();
         return new Promise((resolve, reject) => {
             const query = `SELECT * FROM properties ORDER BY created_at DESC`;
             db.all(query, [], (err, rows) => {
@@ -125,6 +144,7 @@ const dbHelpers = {
 
     // Delete property listing
     deleteProperty: (id) => {
+        if (!db) return unavailable();
         return new Promise((resolve, reject) => {
             // First fetch the property to get image paths so they can be cleaned up later if needed
             const getQuery = `SELECT images FROM properties WHERE id = ?`;
