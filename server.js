@@ -117,10 +117,13 @@ app.post('/api/upload', upload.array('images', 5), async (req, res) => {
     }
 });
 
-// Admin credentials (loaded from environment variables, see .env.example)
-const ADMIN_USER = process.env.ADMIN_USER || 'admin';
-const ADMIN_PASS = process.env.ADMIN_PASS || 'admin123';
-const ADMIN_TOKEN = process.env.ADMIN_TOKEN || 'cea-token-auth-2026';
+// Admin credentials (loaded from environment variables, see .env.example).
+// Strip a leading BOM (﻿) — some tools/editors inject one into env values.
+const BOM = String.fromCharCode(0xFEFF);
+const stripBOM = (s) => (typeof s === 'string' ? (s.startsWith(BOM) ? s.slice(1) : s).trim() : s);
+const ADMIN_USER = stripBOM(process.env.ADMIN_USER) || 'admin';
+const ADMIN_PASS = stripBOM(process.env.ADMIN_PASS) || 'admin123';
+const ADMIN_TOKEN = stripBOM(process.env.ADMIN_TOKEN) || 'cea-token-auth-2026';
 
 // Simple Authorization Middleware (in a real production app, session/JWT should be used)
 const authenticateAdmin = (req, res, next) => {
