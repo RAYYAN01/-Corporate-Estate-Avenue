@@ -1,165 +1,87 @@
-const path = require('path');
+const supabaseUrl = process.env.SUPABASE_URL;
+const supabaseKey = process.env.SUPABASE_SERVICE_KEY;
 
-const DB_PATH = process.env.VERCEL
-    ? path.join('/tmp', 'database.sqlite')
-    : path.join(__dirname, 'database.sqlite');
-
-// sqlite3 is a native module and can fail to load in serverless environments
-// (binary built for the wrong platform). Guard against that so the rest of
-// the app keeps working — DB-backed routes will simply report unavailable.
-let db = null;
-try {
-    const sqlite3 = require('sqlite3').verbose();
-    db = new sqlite3.Database(DB_PATH, (err) => {
-        if (err) {
-            console.error('Error opening database:', err.message);
-            db = null;
-        } else {
-            console.log('Connected to the SQLite database.');
-            initializeTables();
-        }
-    });
-} catch (err) {
-    console.error('SQLite module unavailable, database features disabled:', err.message);
-}
+const API_URL = supabaseUrl ? `${supabaseUrl}/rest/v1` : null;
 
 function unavailable() {
-    return Promise.reject(new Error('Database is not available in this environment.'));
+  return Promise.reject(new Error('Database is not available in this environment.'));
 }
 
-function initializeTables() {
-    db.serialize(() => {
-        // Create inquiries table
-        db.run(`
-            CREATE TABLE IF NOT EXISTS inquiries (
-                id INTEGER PRIMARY KEY AUTOINCREMENT,
-                name TEXT NOT NULL,
-                email TEXT NOT NULL,
-                phone TEXT,
-                service TEXT,
-                message TEXT,
-                created_at DATETIME DEFAULT CURRENT_TIMESTAMP
-            )
-        `, (err) => {
-            if (err) console.error('Error creating inquiries table:', err.message);
-        });
-
-        // Create properties table
-        db.run(`
-            CREATE TABLE IF NOT EXISTS properties (
-                id INTEGER PRIMARY KEY AUTOINCREMENT,
-                name TEXT NOT NULL,
-                phone TEXT NOT NULL,
-                email TEXT NOT NULL,
-                property_type TEXT NOT NULL,
-                property_name TEXT NOT NULL,
-                property_location TEXT NOT NULL,
-                property_bhk TEXT NOT NULL,
-                property_price TEXT NOT NULL,
-                property_description TEXT,
-                images TEXT, -- JSON array of file paths
-                created_at DATETIME DEFAULT CURRENT_TIMESTAMP
-            )
-        `, (err) => {
-            if (err) console.error('Error creating properties table:', err.message);
-        });
-    });
+async function apiFetch(path, options = {}) {
+  if (!API_URL || !supabaseKey) throw new Error('Supabase not configured');
+  const url = `${API_URL}${path}`;
+  const res = await fetch(url, {
+    ...options,
+    headers: {
+      'Content-Type': 'application/json',
+      'apikey': supabaseKey,
+      'Authorization': `Bearer ${supabaseKey}`,
+      'Prefer': 'return=representation',
+      ...options.headers,
+    },
+  });
+  if (!res.ok) {
+    const text = await res.text();
+    throw new Error(`Supabase API error (${res.status}): ${text}`);
+  }
+  if (res.status === 204) return null;
+  return res.json();
 }
 
-// Database helper functions
+function buildQuery(params) {
+  const q = new URLSearchParams();
+  if (params.select) q.set('select', params.select);
+  if (params.order) q.set('order', params.order);
+  if (params.limit) q.set('limit', params.limit);
+  if (params.id) q.set('id', `eq.${params.id}`);
+  return q.toString();
+}
+
 const dbHelpers = {
-    // Save inquiry
-    saveInquiry: (inquiry) => {
-        if (!db) return unavailable();
-        return new Promise((resolve, reject) => {
-            const { name, email, phone, service, message } = inquiry;
-            const query = `INSERT INTO inquiries (name, email, phone, service, message) VALUES (?, ?, ?, ?, ?)`;
-            db.run(query, [name, email, phone, service, message], function(err) {
-                if (err) return reject(err);
-                resolve(this.lastID);
-            });
-        });
-    },
+  saveInquiry: async (inquiry) => {
+    if (!API_URL || !supabaseKey) return unavailable();
+    const data = await apiFetch('/inquiries', {
+      method: 'POST',
+      body: JSON.stringify(inquiry),
+    });
+    return data?.[0]?.id;
+  },
 
-    // Get all inquiries (sorted by latest)
-    getInquiries: () => {
-        if (!db) return unavailable();
-        return new Promise((resolve, reject) => {
-            const query = `SELECT * FROM inquiries ORDER BY created_at DESC`;
-            db.all(query, [], (err, rows) => {
-                if (err) return reject(err);
-                resolve(rows);
-            });
-        });
-    },
+  getInquiries: async () => {
+    if (!API_URL || !supabaseKey) return unavailable();
+    const qs = buildQuery({ select: '*', order: 'created_at.desc' });
+    return apiFetch(`/inquiries?${qs}`);
+  },
 
-    // Delete inquiry
-    deleteInquiry: (id) => {
-        if (!db) return unavailable();
-        return new Promise((resolve, reject) => {
-            const query = `DELETE FROM inquiries WHERE id = ?`;
-            db.run(query, [id], function(err) {
-                if (err) return reject(err);
-                resolve(this.changes);
-            });
-        });
-    },
+  deleteInquiry: async (id) => {
+    if (!API_URL || !supabaseKey) return unavailable();
+    await apiFetch(`/inquiries?id=eq.${id}`, { method: 'DELETE' });
+    return 1;
+  },
 
-    // Save property listing
-    saveProperty: (property) => {
-        if (!db) return unavailable();
-        return new Promise((resolve, reject) => {
-            const { name, phone, email, property_type, property_name, property_location, property_bhk, property_price, property_description, images } = property;
-            const query = `
-                INSERT INTO properties (name, phone, email, property_type, property_name, property_location, property_bhk, property_price, property_description, images)
-                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-            `;
-            db.run(
-                query,
-                [name, phone, email, property_type, property_name, property_location, property_bhk, property_price, property_description, JSON.stringify(images)],
-                function(err) {
-                    if (err) return reject(err);
-                    resolve(this.lastID);
-                }
-            );
-        });
-    },
+  saveProperty: async (property) => {
+    if (!API_URL || !supabaseKey) return unavailable();
+    const data = await apiFetch('/properties', {
+      method: 'POST',
+      body: JSON.stringify(property),
+    });
+    return data?.[0]?.id;
+  },
 
-    // Get all properties (sorted by latest)
-    getProperties: () => {
-        if (!db) return unavailable();
-        return new Promise((resolve, reject) => {
-            const query = `SELECT * FROM properties ORDER BY created_at DESC`;
-            db.all(query, [], (err, rows) => {
-                if (err) return reject(err);
-                // Parse images JSON string back into array
-                const parsedRows = rows.map(row => ({
-                    ...row,
-                    images: row.images ? JSON.parse(row.images) : []
-                }));
-                resolve(parsedRows);
-            });
-        });
-    },
+  getProperties: async () => {
+    if (!API_URL || !supabaseKey) return unavailable();
+    const qs = buildQuery({ select: '*', order: 'created_at.desc' });
+    return apiFetch(`/properties?${qs}`);
+  },
 
-    // Delete property listing
-    deleteProperty: (id) => {
-        if (!db) return unavailable();
-        return new Promise((resolve, reject) => {
-            // First fetch the property to get image paths so they can be cleaned up later if needed
-            const getQuery = `SELECT images FROM properties WHERE id = ?`;
-            db.get(getQuery, [id], (err, row) => {
-                if (err) return reject(err);
-                if (!row) return resolve(0);
-
-                const deleteQuery = `DELETE FROM properties WHERE id = ?`;
-                db.run(deleteQuery, [id], function(deleteErr) {
-                    if (deleteErr) return reject(deleteErr);
-                    resolve({ changes: this.changes, images: row.images ? JSON.parse(row.images) : [] });
-                });
-            });
-        });
-    }
+  deleteProperty: async (id) => {
+    if (!API_URL || !supabaseKey) return unavailable();
+    const rows = await apiFetch(`/properties?id=eq.${id}&select=images`);
+    if (!rows || rows.length === 0) return { changes: 0, images: [] };
+    await apiFetch(`/properties?id=eq.${id}`, { method: 'DELETE' });
+    return { changes: 1, images: rows[0].images || [] };
+  },
 };
 
+console.log('Supabase REST client ready.');
 module.exports = dbHelpers;

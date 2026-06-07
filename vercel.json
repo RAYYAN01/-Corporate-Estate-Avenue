@@ -1,9 +1,14 @@
 {
   "version": 2,
   "builds": [
+    {
+      "src": "*.{css,js,json,png,jpg,jpeg,gif,svg,ico,pdf}",
+      "use": "@vercel/static"
+    },
     { "src": "server.js", "use": "@vercel/node" }
   ],
   "routes": [
+    { "src": "/(.*\\.(css|js|json|png|jpg|jpeg|gif|svg|ico|pdf))$", "dest": "/$1" },
     { "src": "/(.*)", "dest": "server.js" }
   ]
 }

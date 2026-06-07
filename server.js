@@ -9,10 +9,14 @@ const dbHelpers = require('./database');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// Ensure uploads directory exists (use /tmp on Vercel's read-only filesystem)
-const UPLOADS_DIR = process.env.VERCEL
-    ? path.join('/tmp', 'uploads')
-    : path.join(__dirname, 'uploads');
+// Supabase config for Storage (REST API)
+const supabaseUrl = process.env.SUPABASE_URL;
+const supabaseServiceKey = process.env.SUPABASE_SERVICE_KEY;
+const STORAGE_BUCKET = 'property-images';
+const STORAGE_URL = supabaseUrl ? `${supabaseUrl}/storage/v1` : null;
+
+// Ensure local uploads directory exists (for local development)
+const UPLOADS_DIR = path.join(__dirname, 'uploads');
 try {
     if (!fs.existsSync(UPLOADS_DIR)) {
         fs.mkdirSync(UPLOADS_DIR, { recursive: true });
@@ -22,21 +26,10 @@ try {
     console.error('Could not create uploads directory:', err.message);
 }
 
-// Configure Multer for property image storage
-const storage = multer.diskStorage({
-    destination: (req, file, cb) => {
-        cb(null, UPLOADS_DIR);
-    },
-    filename: (req, file, cb) => {
-        const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
-        const ext = path.extname(file.originalname);
-        cb(null, `property-${uniqueSuffix}${ext}`);
-    }
-});
-
+// Configure Multer with memory storage (works on Vercel)
 const upload = multer({
-    storage: storage,
-    limits: { fileSize: 5 * 1024 * 1024 }, // 5MB limit per file
+    storage: multer.memoryStorage(),
+    limits: { fileSize: 5 * 1024 * 1024 },
     fileFilter: (req, file, cb) => {
         if (file.mimetype.startsWith('image/')) {
             cb(null, true);
@@ -46,14 +39,32 @@ const upload = multer({
     }
 });
 
+async function uploadToSupabase(file) {
+    if (!STORAGE_URL || !supabaseServiceKey) return null;
+    const ext = path.extname(file.originalname);
+    const fileName = `property-${Date.now()}-${Math.round(Math.random() * 1E9)}${ext}`;
+    const res = await fetch(`${STORAGE_URL}/object/${STORAGE_BUCKET}/${fileName}`, {
+        method: 'POST',
+        headers: {
+            'Authorization': `Bearer ${supabaseServiceKey}`,
+            'Content-Type': file.mimetype,
+        },
+        body: file.buffer,
+    });
+    if (!res.ok) {
+        const text = await res.text();
+        console.error('Supabase storage upload error:', res.status, text);
+        return null;
+    }
+    return `${supabaseUrl}/storage/v1/object/public/${STORAGE_BUCKET}/${fileName}`;
+}
+
 // Middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // Serve static frontend files
 app.use(express.static(__dirname));
-// Serve uploaded images statically
-app.use('/uploads', express.static(UPLOADS_DIR));
 
 // 1. Submit Inquiry (Contact Form)
 app.post('/api/contact', async (req, res) => {
@@ -77,15 +88,24 @@ app.post('/api/upload', upload.array('images', 5), async (req, res) => {
         const { name, phone, email, 'property-type': type, 'property-name': pName, 'property-location': location, 'property-bhk': bhk, 'property-price': price, 'property-description': description } = req.body;
 
         if (!name || !phone || !email || !type || !pName || !location || !bhk || !price) {
-            // Clean up any uploaded files if validation fails
-            if (req.files) {
-                req.files.forEach(file => fs.unlinkSync(file.path));
-            }
             return res.status(400).json({ success: false, message: 'All required property fields must be filled.' });
         }
 
-        // Extract filenames
-        const imagePaths = req.files ? req.files.map(file => `uploads/${file.filename}`) : [];
+        let imageUrls = [];
+        if (req.files && req.files.length > 0) {
+            if (supabase) {
+                const uploads = req.files.map(f => uploadToSupabase(f));
+                imageUrls = (await Promise.all(uploads)).filter(Boolean);
+            } else {
+                // Fallback: save locally
+                for (const file of req.files) {
+                    const fileName = `property-${Date.now()}-${Math.round(Math.random() * 1E9)}${path.extname(file.originalname)}`;
+                    const filePath = path.join(UPLOADS_DIR, fileName);
+                    fs.writeFileSync(filePath, file.buffer);
+                    imageUrls.push(`/uploads/${fileName}`);
+                }
+            }
+        }
 
         await dbHelpers.saveProperty({
             name,
@@ -97,22 +117,12 @@ app.post('/api/upload', upload.array('images', 5), async (req, res) => {
             property_bhk: bhk,
             property_price: price,
             property_description: description || '',
-            images: imagePaths
+            images: imageUrls
         });
 
         res.status(200).json({ success: true, message: 'Your property has been successfully uploaded for review.' });
     } catch (error) {
         console.error('Error saving property upload:', error);
-        // Clean up uploaded files on error
-        if (req.files) {
-            req.files.forEach(file => {
-                try {
-                    fs.unlinkSync(file.path);
-                } catch (e) {
-                    console.error('Failed to delete file on error cleanup:', e.message);
-                }
-            });
-        }
         res.status(500).json({ success: false, message: 'An error occurred while uploading your property. Please try again.' });
     }
 });
@@ -184,19 +194,17 @@ app.delete('/api/admin/properties/:id', authenticateAdmin, async (req, res) => {
     try {
         const result = await dbHelpers.deleteProperty(req.params.id);
         if (result && result.changes > 0) {
-            // Clean up the actual files on disk
-            if (result.images && Array.isArray(result.images)) {
-                result.images.forEach(imgRelativePath => {
-                    const fullPath = path.join(__dirname, imgRelativePath);
-                    if (fs.existsSync(fullPath)) {
-                        try {
-                            fs.unlinkSync(fullPath);
-                            console.log('Deleted image file from disk:', fullPath);
-                        } catch (e) {
-                            console.error('Failed to delete file:', fullPath, e.message);
-                        }
+            // Clean up images from Supabase Storage
+            if (STORAGE_URL && supabaseServiceKey && result.images && Array.isArray(result.images)) {
+                for (const url of result.images) {
+                    const fileName = url.split('/').pop();
+                    if (fileName) {
+                        await fetch(`${STORAGE_URL}/object/${STORAGE_BUCKET}/${fileName}`, {
+                            method: 'DELETE',
+                            headers: { 'Authorization': `Bearer ${supabaseServiceKey}` },
+                        });
                     }
-                });
+                }
             }
             res.json({ success: true, message: 'Property deleted successfully.' });
         } else {
@@ -205,6 +213,18 @@ app.delete('/api/admin/properties/:id', authenticateAdmin, async (req, res) => {
     } catch (error) {
         res.status(500).json({ success: false, message: error.message });
     }
+});
+
+// Debug health check
+app.get('/api/health', async (req, res) => {
+    let dbStatus = 'unknown';
+    try {
+        await dbHelpers.getInquiries();
+        dbStatus = 'connected';
+    } catch (e) {
+        dbStatus = `error: ${e.message}`;
+    }
+    res.json({ status: 'ok', database: dbStatus });
 });
 
 // Fallback: Send main index.html for undefined routes
