@@ -135,18 +135,43 @@ document.addEventListener('DOMContentLoaded', () => {
         contactForm.addEventListener('submit', (e) => {
             e.preventDefault();
             
+            const submitBtn = contactForm.querySelector('.btn-submit');
+            const originalBtnText = submitBtn.textContent;
+            
             const name = document.getElementById('name').value;
             const email = document.getElementById('email').value;
             const phone = document.getElementById('phone').value;
             const service = document.getElementById('service').value;
+            const message = document.getElementById('message').value;
 
-            console.log('Inquiry submitted:', { name, email, phone, service });
+            // Set loading state
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Sending Inquiry...';
             
-            // Show premium success toast
-            showNotification(`Thank you, ${name}! Your inquiry has been sent to Sajjad Pasha.`);
-            
-            // Reset form
-            contactForm.reset();
+            fetch('/api/contact', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ name, email, phone, service, message })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    showNotification(`Thank you, ${name}! Your inquiry has been sent to Sajjad Pasha.`);
+                    contactForm.reset();
+                } else {
+                    showNotification(data.message || 'Something went wrong. Please try again.');
+                }
+            })
+            .catch(error => {
+                console.error('Error submitting contact form:', error);
+                showNotification('Network error. Please check your connection and try again.');
+            })
+            .finally(() => {
+                submitBtn.disabled = false;
+                submitBtn.textContent = originalBtnText;
+            });
         });
     }
 
@@ -357,15 +382,54 @@ document.addEventListener('DOMContentLoaded', () => {
         uploadForm.addEventListener('submit', (e) => {
             e.preventDefault();
 
+            const submitBtn = uploadForm.querySelector('.btn-submit-modal');
+            const originalBtnText = submitBtn.textContent;
+
             const name = document.getElementById('uploader-name').value;
             const propName = document.getElementById('property-name').value;
 
-            console.log('Property Upload submitted for:', propName);
+            // Set loading state
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Uploading Property...';
 
-            // Show custom gold toast success notification
-            showNotification(`Thank you, ${name}! Your property '${propName}' has been uploaded successfully for review.`);
+            // Build form data
+            const formData = new FormData();
+            formData.append('name', name);
+            formData.append('phone', document.getElementById('uploader-phone').value);
+            formData.append('email', document.getElementById('uploader-email').value);
+            formData.append('property-type', document.getElementById('property-type').value);
+            formData.append('property-name', propName);
+            formData.append('property-location', document.getElementById('property-location').value);
+            formData.append('property-bhk', document.getElementById('property-bhk').value);
+            formData.append('property-price', document.getElementById('property-price').value);
+            formData.append('property-description', document.getElementById('property-description').value);
 
-            closeUploadModal();
+            // Append uploaded files
+            uploadedFilesList.forEach((file) => {
+                formData.append('images', file);
+            });
+
+            fetch('/api/upload', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    showNotification(`Thank you, ${name}! Your property '${propName}' has been uploaded successfully for review.`);
+                    closeUploadModal();
+                } else {
+                    showNotification(data.message || 'Failed to upload property.');
+                }
+            })
+            .catch(error => {
+                console.error('Error uploading property:', error);
+                showNotification('Network error occurred during upload. Please try again.');
+            })
+            .finally(() => {
+                submitBtn.disabled = false;
+                submitBtn.textContent = originalBtnText;
+            });
         });
     }
 

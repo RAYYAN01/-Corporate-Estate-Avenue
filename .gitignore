@@ -1,1 +1,4 @@
 .vercel
+database.sqlite
+uploads/
+node_modules/
