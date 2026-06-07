@@ -1,3 +1,5 @@
+require('dotenv').config({ quiet: true });
+
 const express = require('express');
 const multer = require('multer');
 const path = require('path');
@@ -115,14 +117,15 @@ app.post('/api/upload', upload.array('images', 5), async (req, res) => {
     }
 });
 
-// Admin credentials (standard configuration)
-const ADMIN_USER = 'admin';
-const ADMIN_PASS = 'admin123';
+// Admin credentials (loaded from environment variables, see .env.example)
+const ADMIN_USER = process.env.ADMIN_USER || 'admin';
+const ADMIN_PASS = process.env.ADMIN_PASS || 'admin123';
+const ADMIN_TOKEN = process.env.ADMIN_TOKEN || 'cea-token-auth-2026';
 
 // Simple Authorization Middleware (in a real production app, session/JWT should be used)
 const authenticateAdmin = (req, res, next) => {
     const authHeader = req.headers['authorization'];
-    if (authHeader && authHeader === 'Bearer cea-token-auth-2026') {
+    if (authHeader && authHeader === `Bearer ${ADMIN_TOKEN}`) {
         next();
     } else {
         res.status(401).json({ success: false, message: 'Unauthorized access.' });
@@ -133,8 +136,7 @@ const authenticateAdmin = (req, res, next) => {
 app.post('/api/admin/login', (req, res) => {
     const { username, password } = req.body;
     if (username === ADMIN_USER && password === ADMIN_PASS) {
-        // Return dummy token
-        res.json({ success: true, token: 'cea-token-auth-2026' });
+        res.json({ success: true, token: ADMIN_TOKEN });
     } else {
         res.status(401).json({ success: false, message: 'Invalid username or password.' });
     }
